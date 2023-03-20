@@ -2,7 +2,7 @@ import smbus
 import time
 import Jetson.GPIO as GPIO
 import max6675
-import datetime
+from datetime import datetime, timezone, timedelta
 import csv
 import requests
 
@@ -20,10 +20,15 @@ address = 0x08  # Arduino Uno address
 
 data = [0x01, 0x02, 0x03, 0x04]  # example data to send
 
+tz = timezone(timedelta(hours = 7))
+
 while True:
-    now = datetime.datetime.now()
-    timestamp = datetime.datetime.now()
-    url = "https://blynk.cloud/external/api/update?token=qUmCRBq6jQknDnYZ36opiFUHuLzPYT3a&v10="+str(timestamp)
+    now = datetime.now()
+    timestamp = datetime.now()
+    date = datetime.now(tz=tz)
+    # print(date.isoformat(sep = " "))
+    url = "https://blynk.cloud/external/api/update?token=qUmCRBq6jQknDnYZ36opiFUHuLzPYT3a&v10="+str(date.isoformat(sep = " "))
+    # print(url)
     requests.get(url)
     minute = now.minute
 
@@ -52,7 +57,7 @@ while True:
 
         # Loop to log temperature data
 
-        timestamp = datetime.datetime.now()
+        timestamp = datetime.now()
         temperature = temp
 
         writer.writerow([timestamp, temperature])
