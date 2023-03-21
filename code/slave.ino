@@ -31,7 +31,7 @@ void loop() {
   stepper.setSpeed(500); // max at 900 is the best case, but 500 is the best case for all
   stepper.runSpeed();
   if(run == true){
-      Serial.println("  FUCK  ");
+      Serial.println("  POURING  ");
       setTime = 0;
       Serial.println(millis());
       stepperH.setCurrentPosition(0);
